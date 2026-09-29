@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
 import { 
@@ -37,13 +38,23 @@ export default function WhatWeBuild() {
           </div>
 
           {/* Image Section */}
-          <div className="relative h-64 md:h-80 lg:h-[400px] rounded-3xl overflow-hidden border border-white/5 bg-[var(--surface)] hidden md:block">
-            <div 
-              className="absolute inset-0 opacity-40"
-              style={{ background: "linear-gradient(135deg, var(--surface-elevated) 0%, color-mix(in srgb, var(--surface), var(--accent) 15%) 50%, var(--surface-elevated) 100%)" }}
+          <div className="relative h-64 md:h-80 lg:h-[400px] rounded-3xl overflow-hidden border border-border-subtle bg-[var(--surface)] hidden md:block">
+            <Image 
+              src="/what_we_build_bg.jpg"
+              alt="Digital system architecture (Dark)"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="hidden dark:block object-cover opacity-60 mix-blend-luminosity"
             />
-            <div className="absolute inset-0 grid-overlay opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)]/80 via-transparent to-transparent" />
+            <Image 
+              src="/what_we_build_bg_light.jpg"
+              alt="Digital system architecture (Light)"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="block dark:hidden object-cover opacity-80 mix-blend-luminosity"
+            />
+            <div className="absolute inset-0 grid-overlay opacity-20 dark:opacity-40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] via-transparent to-[var(--surface)]/30" />
           </div>
         </div>
 

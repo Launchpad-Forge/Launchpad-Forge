@@ -101,7 +101,6 @@ export default function Navigation() {
                   <a
                     key={link.label}
                     href={link.href}
-                    data-cursor="VIEW"
                     className={`relative text-xs font-medium tracking-wider uppercase transition-colors duration-300 group ${
                       isActive
                         ? "text-foreground"

@@ -1,0 +1,266 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------------------------
+// Phase 1 Schema: Launchpad Forge Personal CRM
+// ------------------------------------------------------
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("ADMIN")
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  leads         Lead[]   @relation("LeadAssignedUser")
+}
+
+model Company {
+  id            String   @id @default(uuid())
+  name          String
+  website       String?
+  industry      String?
+  companySize   String?
+  location      String?
+  email         String?
+  phone         String?
+  source        String?
+  status        String?
+  notes         String?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  contacts      Contact[]
+  leads         Lead[]
+  opportunities Opportunity[]
+  client        Client?
+  proposals     Proposal[]
+}
+
+model Contact {
+  id            String   @id @default(uuid())
+  companyId     String?
+  name          String
+  jobTitle      String?
+  email         String?
+  phone         String?
+  linkedin      String?
+  whatsapp      String?
+  location      String?
+  notes         String?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  company       Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  opportunities Opportunity[] @relation("PrimaryContact")
+}
+
+model Lead {
+  id                  String   @id @default(uuid())
+  name                String
+  companyName         String?
+  email               String?
+  phone               String?
+  website             String?
+  source              String?
+  industry            String?
+  serviceInterestedIn String?
+  estimatedBudget     Float?
+  priority            String?  @default("Normal") // High, Normal, Low
+  status              String   @default("New")
+  pipelineStage       String?
+  leadScore           Int?
+  nextFollowUp        DateTime?
+  notes               String?
+  
+  assignedUserId      String?
+  companyId           String?
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  assignedUser        User?    @relation("LeadAssignedUser", fields: [assignedUserId], references: [id], onDelete: SetNull)
+  company             Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+}
+
+model Opportunity {
+  id                  String   @id @default(uuid())
+  companyId           String?
+  primaryContactId    String?
+  title               String
+  estimatedValue      Float?
+  probability         Int?     @default(0) // 0 to 100
+  expectedCloseDate   DateTime?
+  stage               String   @default("New")
+  service             String?
+  source              String?
+  priority            String?  @default("Normal")
+  nextFollowUp        DateTime?
+  notes               String?
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  company             Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  primaryContact      Contact? @relation("PrimaryContact", fields: [primaryContactId], references: [id], onDelete: SetNull)
+}
+
+// ------------------------------------------------------
+// Phase 3 Schema: Sales & Delivery
+// ------------------------------------------------------
+
+model Proposal {
+  id              String   @id @default(uuid())
+  proposalNumber  String   @unique
+  clientId        String?
+  companyId       String?
+  title           String
+  description     String?
+  validUntil      DateTime?
+  status          String   @default("Draft")
+  subtotal        Float    @default(0)
+  discount        Float    @default(0)
+  tax             Float    @default(0)
+  total           Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  client          Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  company         Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  items           ProposalItem[]
+}
+
+model ProposalItem {
+  id              String   @id @default(uuid())
+  proposalId      String
+  service         String
+  description     String?
+  quantity        Int      @default(1)
+  unitPrice       Float    @default(0)
+  discount        Float    @default(0)
+  total           Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  proposal        Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+}
+
+model Client {
+  id              String   @id @default(uuid())
+  companyId       String?  @unique
+  status          String   @default("Active")
+  notes           String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  company         Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  proposals       Proposal[]
+  projects        Project[]
+  invoices        Invoice[]
+}
+
+// ------------------------------------------------------
+// Phase 4 Schema: Delivery
+// ------------------------------------------------------
+
+model Project {
+  id                  String   @id @default(uuid())
+  clientId            String?
+  name                String
+  description         String?
+  startDate           DateTime?
+  expectedCompletion  DateTime?
+  status              String   @default("Planning")
+  budget              Float?
+  priority            String?  @default("Normal")
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  client              Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  tasks               Task[]
+  invoices            Invoice[]
+}
+
+model Task {
+  id              String   @id @default(uuid())
+  projectId       String
+  title           String
+  description     String?
+  status          String   @default("Todo")
+  priority        String?  @default("Normal")
+  dueDate         DateTime?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ------------------------------------------------------
+// Phase 5 Schema: Finance
+// ------------------------------------------------------
+
+model Invoice {
+  id              String   @id @default(uuid())
+  invoiceNumber   String   @unique
+  clientId        String?
+  projectId       String?
+  issueDate       DateTime?
+  dueDate         DateTime?
+  status          String   @default("Draft")
+  subtotal        Float    @default(0)
+  tax             Float    @default(0)
+  discount        Float    @default(0)
+  total           Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  client          Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  project         Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  items           InvoiceItem[]
+  payments        Payment[]
+}
+
+model InvoiceItem {
+  id              String   @id @default(uuid())
+  invoiceId       String
+  description     String
+  quantity        Int      @default(1)
+  unitPrice       Float    @default(0)
+  total           Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id              String   @id @default(uuid())
+  invoiceId       String
+  amount          Float
+  date            DateTime @default(now())
+  method          String?
+  reference       String?
+  notes           String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}

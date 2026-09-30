@@ -139,3 +139,65 @@ export const IDEA_TO_IMPACT_STAGES = [
   { label: "LAUNCH", description: "Ship with confidence" },
   { label: "SCALE", description: "Grow without limits" },
 ] as const;
+
+// ============================================
+// CRM CONSTANTS
+// ============================================
+
+export const LEAD_SOURCES = [
+  "Website",
+  "Referral",
+  "LinkedIn",
+  "Instagram",
+  "WhatsApp",
+  "Cold outreach",
+  "College network",
+  "Hackathon",
+  "Email",
+  "Other",
+] as const;
+
+export const LEAD_STATUSES = [
+  "New",
+  "Contacted",
+  "Qualified",
+  "Unqualified",
+  "Converted",
+  "Lost",
+] as const;
+
+export const PIPELINE_STAGES = [
+  "New",
+  "Qualified",
+  "Discovery",
+  "Proposal",
+  "Negotiation",
+  "Won",
+  "Lost",
+] as const;
+
+export const PROPOSAL_STATUSES = [
+  "Draft",
+  "Sent",
+  "Viewed",
+  "Accepted",
+  "Rejected",
+  "Expired",
+] as const;
+
+export const PROJECT_STATUSES = [
+  "Planning",
+  "Active",
+  "On Hold",
+  "Completed",
+  "Cancelled",
+] as const;
+
+export const INVOICE_STATUSES = [
+  "Draft",
+  "Sent",
+  "Partially Paid",
+  "Paid",
+  "Overdue",
+  "Cancelled",
+] as const;

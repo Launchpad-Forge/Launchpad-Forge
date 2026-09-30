@@ -179,6 +179,35 @@ Given the heavy use of WebGL and scroll animations, performance is a priority:
 
 ---
 
+## 🏢 Launchpad Forge Internal CRM
+
+This repository also houses the **Internal CRM** used by Launchpad Forge to manage agency operations from lead capture to final payment.
+
+The CRM is built on the same Next.js infrastructure but heavily utilizes **PostgreSQL** (via Prisma) to track data. By default, the CRM UI gracefully degrades to use mock data for immediate previewing without a database connection.
+
+### Initializing the CRM Database
+
+To activate the real CRM functionality, you must connect a PostgreSQL database and run the migrations:
+
+1. Create a PostgreSQL database (e.g., locally via Docker or remotely via Supabase/Render).
+2. Add the connection string to your `.env.local` or `.env` file:
+   ```bash
+   DATABASE_URL="postgresql://user:password@localhost:5432/launchpad_crm"
+   ```
+3. Push the schema to your database and generate the Prisma Client:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+4. Seed the database with initial administrative accounts and sample data:
+   ```bash
+   npm run postinstall
+   npx prisma db seed
+   ```
+5. Navigate to `http://localhost:3000/crm` to view your live, data-driven command center.
+
+---
+
 ## 🏗️ Building for Production
 
 When you are ready to deploy, run the production build command to optimize the application. This process compiles the application, runs static generation, and bundles the assets.

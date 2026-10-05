@@ -129,6 +129,13 @@ export default function Navigation() {
                   START A PROJECT →
                 </MagneticButton>
               </div>
+              <a
+                href="mailto:launchpadforge1618@gmail.com"
+                className="hidden lg:flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                launchpadforge1618@gmail.com
+              </a>
 
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -180,6 +187,16 @@ export default function Navigation() {
                 START A PROJECT →
               </MagneticButton>
             </motion.div>
+            <motion.a
+              href="mailto:launchpadforge1618@gmail.com"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: (NAV_LINKS.length + 1) * 0.08 }}
+              className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+            >
+              launchpadforge1618@gmail.com
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>

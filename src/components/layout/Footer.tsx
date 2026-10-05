@@ -58,11 +58,11 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:hello@launchpadforge.com"
+                href="mailto:launchpadforge1618@gmail.com"
                 className="text-sm text-[var(--text-secondary)] hover:text-foreground transition-colors duration-300 flex items-center gap-2"
               >
                 <Mail size={14} className="text-[var(--accent)]" />
-                hello@launchpadforge.com
+                launchpadforge1618@gmail.com
               </a>
               <div className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
                 <MapPin size={14} className="text-[var(--accent)] mt-0.5 flex-shrink-0" />

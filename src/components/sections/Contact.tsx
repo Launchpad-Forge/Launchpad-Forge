@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import MagneticButton from "@/components/ui/MagneticButton";
@@ -10,6 +10,47 @@ import { COUNTRY_CODES } from "@/lib/countryCodes";
 export default function Contact() {
   const isMobile = useIsMobile();
   const [countryCode, setCountryCode] = useState("+91");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    const fd = new FormData(e.currentTarget);
+    const rawPhone = fd.get("phone") as string;
+    const fullPhone = rawPhone ? `${countryCode} ${rawPhone}` : "";
+
+    const body = {
+      name: fd.get("name") as string,
+      email: fd.get("email") as string,
+      phone: fullPhone,
+      company: fd.get("company") as string,
+      service: fd.get("service") as string,
+      message: fd.get("message") as string,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        throw new Error(json.error || "Submission failed");
+      }
+      setStatus("success");
+      formRef.current?.reset();
+      setCountryCode("+91");
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
+  }
+
 
   return (
     <section id="contact" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -69,10 +110,10 @@ export default function Contact() {
             <div className="hidden lg:block">
               <MagneticButton
                 variant="primary"
-                href="mailto:hello@launchpadforge.com"
+                href="mailto:launchpadforge1618@gmail.com"
                 cursorText="EMAIL US"
               >
-                hello@launchpadforge.com →
+                launchpadforge1618@gmail.com →
               </MagneticButton>
             </div>
           </motion.div>
@@ -84,30 +125,34 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <form 
+            <form
+              ref={formRef}
               className="glass-elevated p-8 md:p-10 rounded-[2rem] space-y-6 relative overflow-hidden"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
             >
               {/* Form subtle glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/10 blur-[100px] rounded-full pointer-events-none" />
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                 <div>
-                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Name</label>
-                  <input 
-                    type="text" 
+                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Name *</label>
+                  <input
+                    name="name"
+                    type="text"
                     autoComplete="name"
-                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300" 
-                    placeholder="John Doe" 
+                    required
+                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300"
+                    placeholder="John Doe"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Email</label>
-                  <input 
-                    type="email" 
+                  <input
+                    name="email"
+                    type="email"
                     autoComplete="email"
-                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300" 
-                    placeholder="john@example.com" 
+                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300"
+                    placeholder="john@example.com"
                   />
                 </div>
                 <div>
@@ -116,7 +161,7 @@ export default function Contact() {
                     <div className="relative flex-shrink-0 flex items-center gap-2 pl-4 pr-3 py-3.5">
                       <span className="text-foreground text-sm font-medium pointer-events-none">{countryCode}</span>
                       <svg className="w-4 h-4 text-[var(--text-secondary)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                      <select 
+                      <select
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer text-sm"
@@ -130,28 +175,30 @@ export default function Contact() {
                       </select>
                     </div>
                     <div className="w-px bg-border-subtle my-3 opacity-50 flex-shrink-0" />
-                    <input 
-                      type="tel" 
+                    <input
+                      name="phone"
+                      type="tel"
                       autoComplete="tel-national"
-                      className="w-full flex-1 bg-transparent border-none px-4 py-3.5 text-foreground focus:outline-none min-w-0" 
-                      placeholder="98765 43210" 
+                      className="w-full flex-1 bg-transparent border-none px-4 py-3.5 text-foreground focus:outline-none min-w-0"
+                      placeholder="98765 43210"
                     />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Company Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    name="company"
+                    type="text"
                     autoComplete="organization"
-                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300" 
-                    placeholder="Acme Corp" 
+                    className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300"
+                    placeholder="Acme Corp"
                   />
                 </div>
               </div>
-              
+
               <div className="relative z-10">
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">What are you looking to build?</label>
-                <select defaultValue="" className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300 appearance-none">
+                <select name="service" defaultValue="" className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300 appearance-none">
                   <option value="" disabled className="bg-surface-elevated text-foreground">Select an option...</option>
                   <option value="web" className="bg-surface-elevated text-foreground">Web Application / Website</option>
                   <option value="mobile" className="bg-surface-elevated text-foreground">Mobile App</option>
@@ -163,19 +210,27 @@ export default function Contact() {
 
               <div className="relative z-10">
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Project Details</label>
-                <textarea 
+                <textarea
+                  name="message"
                   rows={4}
-                  className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300 resize-none" 
-                  placeholder="Tell us about your goals, timeline, and budget..." 
+                  className="w-full bg-surface-elevated/50 border border-border-subtle rounded-xl px-4 py-3.5 text-foreground focus:outline-none focus:border-[var(--accent)] focus:bg-foreground/5 transition-all duration-300 resize-none"
+                  placeholder="Tell us about your goals, timeline, and budget..."
                 />
               </div>
 
-              <div className="pt-2 relative z-10">
-                <button 
+              <div className="pt-2 relative z-10 space-y-3">
+                {status === "success" && (
+                  <p className="text-center text-sm font-medium text-green-400">✓ Your inquiry has been submitted! We'll be in touch soon.</p>
+                )}
+                {status === "error" && (
+                  <p className="text-center text-sm text-[var(--accent)]">{errorMsg}</p>
+                )}
+                <button
                   type="submit"
-                  className="w-full bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-foreground font-medium rounded-xl py-4 transition-all duration-300 shadow-[0_0_20px_rgba(232,101,43,0.3)] hover:shadow-[0_0_30px_rgba(232,101,43,0.5)]"
+                  disabled={status === "loading" || status === "success"}
+                  className="w-full bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-foreground font-medium rounded-xl py-4 transition-all duration-300 shadow-[0_0_20px_rgba(232,101,43,0.3)] hover:shadow-[0_0_30px_rgba(232,101,43,0.5)] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Submit Inquiry
+                  {status === "loading" ? "Submitting…" : status === "success" ? "Submitted ✓" : "Submit Inquiry"}
                 </button>
               </div>
             </form>

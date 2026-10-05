@@ -13,7 +13,8 @@ export async function createServiceAction(data: {
   description?: string;
   details: string[];
 }) {
-  const count = await prisma.orm.public.Service.aggregate(s => s.count());
+  const agg = await prisma.orm.public.Service.aggregate(s => ({ total: s.count() }));
+  const count = (agg as { total: number }).total ?? 0;
   const number = String(count + 1).padStart(2, '0');
   
   await prisma.orm.public.Service.create({

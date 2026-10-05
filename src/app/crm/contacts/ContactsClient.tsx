@@ -10,11 +10,21 @@ import { FormInput } from "@/components/crm/FormInput";
 import { FormSelect } from "@/components/crm/FormSelect";
 import { SubmitButton } from "@/components/crm/SubmitButton";
 import { createContactAction, updateContactAction, deleteContactAction } from "./actions";
-import type { Prisma } from "@prisma/client";
 
-type ContactWithRelations = Prisma.ContactGetPayload<{
-  include: { company: true; _count: { select: { opportunities: true; activities: true } } }
-}>;
+type ContactWithRelations = {
+  id: string;
+  name: string;
+  email?: string | null;
+  phone?: string | null;
+  role?: string | null;
+  jobTitle?: string | null;
+  location?: string | null;
+  companyId?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  company?: { id: string; name: string } | null;
+  _count: { opportunities: number; activities: number };
+};
 
 export function ContactsClient({
   contacts,

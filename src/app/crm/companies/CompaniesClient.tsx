@@ -13,11 +13,21 @@ import { FormSelect } from "@/components/crm/FormSelect";
 import { SubmitButton } from "@/components/crm/SubmitButton";
 import { COMPANY_STATUSES } from "@/lib/constants";
 import { createCompanyAction, updateCompanyAction, deleteCompanyAction } from "./actions";
-import type { Prisma } from "@prisma/client";
 
-type CompanyWithRelations = Prisma.CompanyGetPayload<{
-  include: { _count: { select: { contacts: true; opportunities: true; leads: true } } }
-}>;
+type CompanyWithRelations = {
+  id: string;
+  name: string;
+  email?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  industry?: string | null;
+  status?: string | null;
+  notes?: string | null;
+  location?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  _count: { contacts: number; opportunities: number; leads: number };
+};
 
 export function CompaniesClient({
   companies,

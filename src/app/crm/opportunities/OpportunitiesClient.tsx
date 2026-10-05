@@ -11,11 +11,21 @@ import { SubmitButton } from "@/components/crm/SubmitButton";
 import { PIPELINE_STAGES, PRIORITIES } from "@/lib/constants";
 import { createOpportunityAction, updateOpportunityAction, deleteOpportunityAction } from "./actions";
 import KanbanBoard from "@/components/modules/KanbanBoard";
-import type { Prisma } from "@prisma/client";
 
-type OpportunityWithRelations = Prisma.OpportunityGetPayload<{
-  include: { company: true }
-}>;
+type OpportunityWithRelations = {
+  id: string;
+  title: string;
+  stage: string;
+  priority?: string | null;
+  estimatedValue?: number | null;
+  probability?: number | null;
+  service?: string | null;
+  companyId?: string | null;
+  primaryContactId?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  company?: { id: string; name: string } | null;
+};
 
 export function OpportunitiesClient({
   opportunities,

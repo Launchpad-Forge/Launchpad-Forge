@@ -34,15 +34,12 @@ export async function updatePortfolioProjectAction(id: string, data: {
   gradient: string;
   items: { icon: string, label: string }[];
 }) {
-  const result = await prisma.orm.public.PortfolioProject.update({
-    where: { id },
-    data: {
-      title: data.title,
-      subtitle: data.subtitle,
-      label: data.label,
-      gradient: data.gradient,
-      items: data.items,
-    }
+  const result = await prisma.orm.public.PortfolioProject.where({ id }).update({
+    title: data.title,
+    subtitle: data.subtitle,
+    label: data.label,
+    gradient: data.gradient,
+    items: data.items,
   });
   revalidatePath("/");
   revalidatePath("/crm/portfolio");
@@ -50,9 +47,7 @@ export async function updatePortfolioProjectAction(id: string, data: {
 }
 
 export async function deletePortfolioProjectAction(id: string) {
-  const result = await prisma.orm.public.PortfolioProject.delete({
-    where: { id }
-  });
+  const result = await prisma.orm.public.PortfolioProject.where({ id }).delete();
   revalidatePath("/");
   revalidatePath("/crm/portfolio");
   return result;

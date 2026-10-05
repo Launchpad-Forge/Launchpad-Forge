@@ -1,0 +1,2824 @@
+[
+  {
+    "id": "dropDefault.Activity.status",
+    "label": "Drop default on \"Activity\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Activity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Activity",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Activity\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Activity",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Attachment.provider",
+    "label": "Drop default on \"Attachment\".\"provider\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "provider",
+        "table": "Attachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"provider\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment",
+          "provider"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"provider\"",
+        "sql": "ALTER TABLE \"public\".\"Attachment\" ALTER COLUMN \"provider\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"provider\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment",
+          "provider"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Client.status",
+    "label": "Drop default on \"Client\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Client"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Client",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Client\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Client",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Company.status",
+    "label": "Drop default on \"Company\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Company"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Company",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Company\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Company",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.FollowUp.priority",
+    "label": "Drop default on \"FollowUp\".\"priority\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priority",
+        "table": "FollowUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priority\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "priority"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"priority\"",
+        "sql": "ALTER TABLE \"public\".\"FollowUp\" ALTER COLUMN \"priority\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "priority"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.FollowUp.status",
+    "label": "Drop default on \"FollowUp\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "FollowUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"FollowUp\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Invoice.discount",
+    "label": "Drop default on \"Invoice\".\"discount\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "discount",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"discount\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "discount"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"discount\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ALTER COLUMN \"discount\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"discount\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "discount"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Invoice.status",
+    "label": "Drop default on \"Invoice\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Invoice.subtotal",
+    "label": "Drop default on \"Invoice\".\"subtotal\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "subtotal",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"subtotal\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "subtotal"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"subtotal\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ALTER COLUMN \"subtotal\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"subtotal\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "subtotal"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Invoice.tax",
+    "label": "Drop default on \"Invoice\".\"tax\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "tax",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"tax\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "tax"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"tax\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ALTER COLUMN \"tax\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"tax\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "tax"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Invoice.total",
+    "label": "Drop default on \"Invoice\".\"total\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "total",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"total\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "total"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"total\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ALTER COLUMN \"total\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"total\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "total"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.InvoiceItem.quantity",
+    "label": "Drop default on \"InvoiceItem\".\"quantity\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "quantity",
+        "table": "InvoiceItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"quantity\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "quantity"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"quantity\"",
+        "sql": "ALTER TABLE \"public\".\"InvoiceItem\" ALTER COLUMN \"quantity\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"quantity\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "quantity"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.InvoiceItem.total",
+    "label": "Drop default on \"InvoiceItem\".\"total\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "total",
+        "table": "InvoiceItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"total\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "total"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"total\"",
+        "sql": "ALTER TABLE \"public\".\"InvoiceItem\" ALTER COLUMN \"total\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"total\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "total"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.InvoiceItem.unitPrice",
+    "label": "Drop default on \"InvoiceItem\".\"unitPrice\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "unitPrice",
+        "table": "InvoiceItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"unitPrice\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "unitPrice"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"unitPrice\"",
+        "sql": "ALTER TABLE \"public\".\"InvoiceItem\" ALTER COLUMN \"unitPrice\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"unitPrice\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "unitPrice"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Lead.priority",
+    "label": "Drop default on \"Lead\".\"priority\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priority",
+        "table": "Lead"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priority\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "priority"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"priority\"",
+        "sql": "ALTER TABLE \"public\".\"Lead\" ALTER COLUMN \"priority\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "priority"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Lead.status",
+    "label": "Drop default on \"Lead\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Lead"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Lead\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Opportunity.priority",
+    "label": "Drop default on \"Opportunity\".\"priority\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priority",
+        "table": "Opportunity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priority\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "priority"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"priority\"",
+        "sql": "ALTER TABLE \"public\".\"Opportunity\" ALTER COLUMN \"priority\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "priority"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Opportunity.probability",
+    "label": "Drop default on \"Opportunity\".\"probability\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "probability",
+        "table": "Opportunity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"probability\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "probability"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"probability\"",
+        "sql": "ALTER TABLE \"public\".\"Opportunity\" ALTER COLUMN \"probability\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"probability\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "probability"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Opportunity.stage",
+    "label": "Drop default on \"Opportunity\".\"stage\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "stage",
+        "table": "Opportunity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"stage\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "stage"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"stage\"",
+        "sql": "ALTER TABLE \"public\".\"Opportunity\" ALTER COLUMN \"stage\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"stage\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "stage"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Project.priority",
+    "label": "Drop default on \"Project\".\"priority\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priority",
+        "table": "Project"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priority\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "priority"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"priority\"",
+        "sql": "ALTER TABLE \"public\".\"Project\" ALTER COLUMN \"priority\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "priority"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Project.status",
+    "label": "Drop default on \"Project\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Project"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Project\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Proposal.discount",
+    "label": "Drop default on \"Proposal\".\"discount\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "discount",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"discount\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "discount"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"discount\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ALTER COLUMN \"discount\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"discount\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "discount"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Proposal.status",
+    "label": "Drop default on \"Proposal\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Proposal.subtotal",
+    "label": "Drop default on \"Proposal\".\"subtotal\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "subtotal",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"subtotal\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "subtotal"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"subtotal\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ALTER COLUMN \"subtotal\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"subtotal\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "subtotal"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Proposal.tax",
+    "label": "Drop default on \"Proposal\".\"tax\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "tax",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"tax\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "tax"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"tax\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ALTER COLUMN \"tax\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"tax\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "tax"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Proposal.total",
+    "label": "Drop default on \"Proposal\".\"total\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "total",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"total\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "total"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"total\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ALTER COLUMN \"total\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"total\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "total"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.ProposalItem.discount",
+    "label": "Drop default on \"ProposalItem\".\"discount\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "discount",
+        "table": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"discount\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "discount"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"discount\"",
+        "sql": "ALTER TABLE \"public\".\"ProposalItem\" ALTER COLUMN \"discount\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"discount\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "discount"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.ProposalItem.quantity",
+    "label": "Drop default on \"ProposalItem\".\"quantity\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "quantity",
+        "table": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"quantity\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "quantity"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"quantity\"",
+        "sql": "ALTER TABLE \"public\".\"ProposalItem\" ALTER COLUMN \"quantity\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"quantity\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "quantity"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.ProposalItem.total",
+    "label": "Drop default on \"ProposalItem\".\"total\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "total",
+        "table": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"total\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "total"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"total\"",
+        "sql": "ALTER TABLE \"public\".\"ProposalItem\" ALTER COLUMN \"total\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"total\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "total"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.ProposalItem.unitPrice",
+    "label": "Drop default on \"ProposalItem\".\"unitPrice\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "unitPrice",
+        "table": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"unitPrice\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "unitPrice"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"unitPrice\"",
+        "sql": "ALTER TABLE \"public\".\"ProposalItem\" ALTER COLUMN \"unitPrice\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"unitPrice\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "unitPrice"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Tag.color",
+    "label": "Drop default on \"Tag\".\"color\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "color",
+        "table": "Tag"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"color\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Tag",
+          "color"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"color\"",
+        "sql": "ALTER TABLE \"public\".\"Tag\" ALTER COLUMN \"color\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"color\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Tag",
+          "color"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Task.priority",
+    "label": "Drop default on \"Task\".\"priority\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priority",
+        "table": "Task"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priority\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "priority"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"priority\"",
+        "sql": "ALTER TABLE \"public\".\"Task\" ALTER COLUMN \"priority\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "priority"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.Task.status",
+    "label": "Drop default on \"Task\".\"status\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "Task"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"status\"",
+        "sql": "ALTER TABLE \"public\".\"Task\" ALTER COLUMN \"status\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.User.role",
+    "label": "Drop default on \"User\".\"role\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "role",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"role\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "role"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"role\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ALTER COLUMN \"role\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"role\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "role"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Activity",
+    "label": "Enable row-level security on \"Activity\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Activity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Activity\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Activity"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Activity\"",
+        "sql": "ALTER TABLE \"public\".\"Activity\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Activity\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Activity"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Attachment",
+    "label": "Enable row-level security on \"Attachment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Attachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Attachment\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Attachment\"",
+        "sql": "ALTER TABLE \"public\".\"Attachment\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Attachment\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Client",
+    "label": "Enable row-level security on \"Client\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Client"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Client\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Client"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Client\"",
+        "sql": "ALTER TABLE \"public\".\"Client\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Client\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Client"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Company",
+    "label": "Enable row-level security on \"Company\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Company"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Company\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Company"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Company\"",
+        "sql": "ALTER TABLE \"public\".\"Company\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Company\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Company"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Contact",
+    "label": "Enable row-level security on \"Contact\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Contact"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Contact\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Contact"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Contact\"",
+        "sql": "ALTER TABLE \"public\".\"Contact\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Contact\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Contact"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.FollowUp",
+    "label": "Enable row-level security on \"FollowUp\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "FollowUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"FollowUp\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"FollowUp\"",
+        "sql": "ALTER TABLE \"public\".\"FollowUp\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"FollowUp\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Invoice",
+    "label": "Enable row-level security on \"Invoice\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Invoice\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Invoice\"",
+        "sql": "ALTER TABLE \"public\".\"Invoice\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Invoice\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.InvoiceItem",
+    "label": "Enable row-level security on \"InvoiceItem\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "InvoiceItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"InvoiceItem\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"InvoiceItem\"",
+        "sql": "ALTER TABLE \"public\".\"InvoiceItem\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"InvoiceItem\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Lead",
+    "label": "Enable row-level security on \"Lead\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Lead"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Lead\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Lead"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Lead\"",
+        "sql": "ALTER TABLE \"public\".\"Lead\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Lead\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Lead"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Opportunity",
+    "label": "Enable row-level security on \"Opportunity\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Opportunity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Opportunity\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Opportunity\"",
+        "sql": "ALTER TABLE \"public\".\"Opportunity\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Opportunity\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Payment",
+    "label": "Enable row-level security on \"Payment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Payment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Payment\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Payment"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Payment\"",
+        "sql": "ALTER TABLE \"public\".\"Payment\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Payment\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Payment"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Project",
+    "label": "Enable row-level security on \"Project\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Project"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Project\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Project"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Project\"",
+        "sql": "ALTER TABLE \"public\".\"Project\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Project\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Project"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Proposal",
+    "label": "Enable row-level security on \"Proposal\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Proposal\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Proposal\"",
+        "sql": "ALTER TABLE \"public\".\"Proposal\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Proposal\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.ProposalItem",
+    "label": "Enable row-level security on \"ProposalItem\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"ProposalItem\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"ProposalItem\"",
+        "sql": "ALTER TABLE \"public\".\"ProposalItem\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"ProposalItem\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Tag",
+    "label": "Enable row-level security on \"Tag\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Tag"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Tag\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Tag"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Tag\"",
+        "sql": "ALTER TABLE \"public\".\"Tag\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Tag\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Tag"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.Task",
+    "label": "Enable row-level security on \"Task\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "Task"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"Task\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Task"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"Task\"",
+        "sql": "ALTER TABLE \"public\".\"Task\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"Task\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "Task"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rowLevelSecurity.public.User",
+    "label": "Enable row-level security on \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rowLevelSecurity",
+        "name": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "check RLS is not already enabled on \"User\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND NOT (\"c\".\"relrowsecurity\"))) AS \"result\"",
+        "params": [
+          "public",
+          "User"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "enable row-level security on \"User\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ENABLE ROW LEVEL SECURITY"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify row-level security is enabled on \"User\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"c\".\"relrowsecurity\")) AS \"result\"",
+        "params": [
+          "public",
+          "User"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Activity.allow_authenticated_Activity_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Activity_935c2c52\" on \"Activity\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Activity_935c2c52",
+        "table": "Activity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Activity_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Activity",
+          "allow_authenticated_Activity_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Activity_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Activity_935c2c52\" ON \"public\".\"Activity\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Activity_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Activity",
+          "allow_authenticated_Activity_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Attachment.allow_authenticated_Attachment_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Attachment_935c2c52\" on \"Attachment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Attachment_935c2c52",
+        "table": "Attachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Attachment_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment",
+          "allow_authenticated_Attachment_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Attachment_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Attachment_935c2c52\" ON \"public\".\"Attachment\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Attachment_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Attachment",
+          "allow_authenticated_Attachment_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Client.allow_authenticated_Client_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Client_935c2c52\" on \"Client\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Client_935c2c52",
+        "table": "Client"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Client_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Client",
+          "allow_authenticated_Client_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Client_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Client_935c2c52\" ON \"public\".\"Client\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Client_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Client",
+          "allow_authenticated_Client_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Company.allow_authenticated_Company_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Company_935c2c52\" on \"Company\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Company_935c2c52",
+        "table": "Company"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Company_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Company",
+          "allow_authenticated_Company_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Company_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Company_935c2c52\" ON \"public\".\"Company\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Company_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Company",
+          "allow_authenticated_Company_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Contact.allow_authenticated_Contact_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Contact_935c2c52\" on \"Contact\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Contact_935c2c52",
+        "table": "Contact"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Contact_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Contact",
+          "allow_authenticated_Contact_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Contact_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Contact_935c2c52\" ON \"public\".\"Contact\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Contact_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Contact",
+          "allow_authenticated_Contact_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.FollowUp.allow_authenticated_FollowUp_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_FollowUp_935c2c52\" on \"FollowUp\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_FollowUp_935c2c52",
+        "table": "FollowUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_FollowUp_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "allow_authenticated_FollowUp_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_FollowUp_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_FollowUp_935c2c52\" ON \"public\".\"FollowUp\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_FollowUp_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "FollowUp",
+          "allow_authenticated_FollowUp_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Invoice.allow_authenticated_Invoice_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Invoice_935c2c52\" on \"Invoice\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Invoice_935c2c52",
+        "table": "Invoice"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Invoice_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "allow_authenticated_Invoice_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Invoice_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Invoice_935c2c52\" ON \"public\".\"Invoice\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Invoice_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Invoice",
+          "allow_authenticated_Invoice_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.InvoiceItem.allow_authenticated_InvoiceItem_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_InvoiceItem_935c2c52\" on \"InvoiceItem\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_InvoiceItem_935c2c52",
+        "table": "InvoiceItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_InvoiceItem_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "allow_authenticated_InvoiceItem_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_InvoiceItem_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_InvoiceItem_935c2c52\" ON \"public\".\"InvoiceItem\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_InvoiceItem_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "InvoiceItem",
+          "allow_authenticated_InvoiceItem_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Lead.allow_authenticated_Lead_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Lead_935c2c52\" on \"Lead\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Lead_935c2c52",
+        "table": "Lead"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Lead_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "allow_authenticated_Lead_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Lead_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Lead_935c2c52\" ON \"public\".\"Lead\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Lead_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Lead",
+          "allow_authenticated_Lead_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Opportunity.allow_authenticated_Opportunity_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Opportunity_935c2c52\" on \"Opportunity\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Opportunity_935c2c52",
+        "table": "Opportunity"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Opportunity_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "allow_authenticated_Opportunity_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Opportunity_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Opportunity_935c2c52\" ON \"public\".\"Opportunity\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Opportunity_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Opportunity",
+          "allow_authenticated_Opportunity_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Payment.allow_authenticated_Payment_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Payment_935c2c52\" on \"Payment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Payment_935c2c52",
+        "table": "Payment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Payment_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Payment",
+          "allow_authenticated_Payment_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Payment_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Payment_935c2c52\" ON \"public\".\"Payment\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Payment_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Payment",
+          "allow_authenticated_Payment_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Project.allow_authenticated_Project_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Project_935c2c52\" on \"Project\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Project_935c2c52",
+        "table": "Project"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Project_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "allow_authenticated_Project_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Project_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Project_935c2c52\" ON \"public\".\"Project\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Project_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Project",
+          "allow_authenticated_Project_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Proposal.allow_authenticated_Proposal_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Proposal_935c2c52\" on \"Proposal\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Proposal_935c2c52",
+        "table": "Proposal"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Proposal_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "allow_authenticated_Proposal_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Proposal_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Proposal_935c2c52\" ON \"public\".\"Proposal\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Proposal_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Proposal",
+          "allow_authenticated_Proposal_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.ProposalItem.allow_authenticated_ProposalItem_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_ProposalItem_935c2c52\" on \"ProposalItem\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_ProposalItem_935c2c52",
+        "table": "ProposalItem"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_ProposalItem_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "allow_authenticated_ProposalItem_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_ProposalItem_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_ProposalItem_935c2c52\" ON \"public\".\"ProposalItem\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_ProposalItem_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "ProposalItem",
+          "allow_authenticated_ProposalItem_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Tag.allow_authenticated_Tag_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Tag_935c2c52\" on \"Tag\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Tag_935c2c52",
+        "table": "Tag"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Tag_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Tag",
+          "allow_authenticated_Tag_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Tag_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Tag_935c2c52\" ON \"public\".\"Tag\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Tag_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Tag",
+          "allow_authenticated_Tag_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.Task.allow_authenticated_Task_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_Task_935c2c52\" on \"Task\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_Task_935c2c52",
+        "table": "Task"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_Task_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "allow_authenticated_Task_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_Task_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_Task_935c2c52\" ON \"public\".\"Task\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_Task_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Task",
+          "allow_authenticated_Task_935c2c52"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rlsPolicy.public.User.allow_authenticated_User_935c2c52",
+    "label": "Create RLS policy \"allow_authenticated_User_935c2c52\" on \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "rlsPolicy",
+        "name": "allow_authenticated_User_935c2c52",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure RLS policy \"allow_authenticated_User_935c2c52\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "allow_authenticated_User_935c2c52"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create RLS policy \"allow_authenticated_User_935c2c52\"",
+        "sql": "CREATE POLICY \"allow_authenticated_User_935c2c52\" ON \"public\".\"User\" AS PERMISSIVE FOR ALL TO authenticated USING (true) WITH CHECK (true)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify RLS policy \"allow_authenticated_User_935c2c52\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_policies\" WHERE (\"schemaname\" = $1 AND \"tablename\" = $2 AND \"policyname\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "allow_authenticated_User_935c2c52"
+        ]
+      }
+    ]
+  }
+]

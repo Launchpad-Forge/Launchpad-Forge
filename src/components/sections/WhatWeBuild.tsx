@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { SERVICES } from "@/lib/constants";
+import { SERVICES as STATIC_SERVICES } from "@/lib/constants";
+import { getServicesAction } from "@/app/crm/services/actions";
 import { 
   Layout, Smartphone, Brain, Workflow, Database, Cloud, Shield, 
   Network, PenTool, TrendingUp, Palette, Cpu, Atom, CheckCircle, 
@@ -16,7 +17,16 @@ const icons = {
 };
 
 export default function WhatWeBuild() {
-  const [activeService, setActiveService] = useState<typeof SERVICES[number] | null>(null);
+  const [services, setServices] = useState<any[]>(STATIC_SERVICES as unknown as any[]);
+  const [activeService, setActiveService] = useState<any | null>(null);
+
+  useEffect(() => {
+    getServicesAction().then(data => {
+      if (data && data.length > 0) {
+        setServices(data);
+      }
+    });
+  }, []);
 
   return (
     <section id="services" className="relative py-20 lg:py-32">
@@ -60,7 +70,7 @@ export default function WhatWeBuild() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((service, index) => {
+          {services.map((service, index) => {
             const IconComponent = icons[service.icon as keyof typeof icons];
             return (
               <motion.div
@@ -109,7 +119,7 @@ export default function WhatWeBuild() {
   );
 }
 
-function ModalOverlay({ service, onClose }: { service: typeof SERVICES[number]; onClose: () => void }) {
+function ModalOverlay({ service, onClose }: { service: any; onClose: () => void }) {
   // Escape key to close
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -163,7 +173,7 @@ function ModalOverlay({ service, onClose }: { service: typeof SERVICES[number]; 
           <h4 className="font-bold text-[var(--accent)] tracking-widest text-sm uppercase mb-6 flex items-center gap-2">
             <span className="w-8 h-px bg-[var(--accent)]" /> What We Build
           </h4>
-          {service.details?.map((detail, idx) => (
+          {service.details?.map((detail: string, idx: number) => (
             <div key={idx} className="flex items-start gap-3">
               <div className="mt-1 flex-shrink-0">
                 <Check size={18} className="text-[var(--accent)]" />

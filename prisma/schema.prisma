@@ -1,13 +1,9 @@
-generator client {
-  provider = "prisma-client-js"
-}
+// use prisma-8
 
-datasource db {
-  provider = "postgresql"
-}
+namespace public {
 
 // ------------------------------------------------------
-// Phase 1 Schema: Launchpad Forge Personal CRM
+// Core CRM Schema: Launchpad Forge Personal CRM
 // ------------------------------------------------------
 
 model User {
@@ -15,12 +11,14 @@ model User {
   name          String
   email         String   @unique
   passwordHash  String
-  role          String   @default("ADMIN")
+  role          String   
   
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     temporal.updatedAtString()
   
-  leads         Lead[]   @relation("LeadAssignedUser")
+  leads         Lead[]       @relation("LeadAssignedUser")
+  activities    Activity[]   @relation("ActivityAuthor")
+  @@rls
 }
 
 model Company {
@@ -33,17 +31,23 @@ model Company {
   email         String?
   phone         String?
   source        String?
-  status        String?
+  status        String?  
   notes         String?
   
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     temporal.updatedAtString()
 
   contacts      Contact[]
   leads         Lead[]
   opportunities Opportunity[]
   client        Client?
   proposals     Proposal[]
+  activities    Activity[]
+  followUps     FollowUp[]
+  attachments   Attachment[]
+
+  @@index([status])
+  @@rls
 }
 
 model Contact {
@@ -59,10 +63,17 @@ model Contact {
   notes         String?
   
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     temporal.updatedAtString()
 
   company       Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   opportunities Opportunity[] @relation("PrimaryContact")
+  activities    Activity[]
+  followUps     FollowUp[]
+  attachments   Attachment[]
+
+  @@index([companyId])
+  @@index([email])
+  @@rls
 }
 
 model Lead {
@@ -76,8 +87,8 @@ model Lead {
   industry            String?
   serviceInterestedIn String?
   estimatedBudget     Float?
-  priority            String?  @default("Normal") // High, Normal, Low
-  status              String   @default("New")
+  priority            String?  
+  status              String   
   pipelineStage       String?
   leadScore           Int?
   nextFollowUp        DateTime?
@@ -87,10 +98,18 @@ model Lead {
   companyId           String?
   
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  updatedAt           temporal.updatedAtString()
 
   assignedUser        User?    @relation("LeadAssignedUser", fields: [assignedUserId], references: [id], onDelete: SetNull)
   company             Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  activities          Activity[]
+  followUps           FollowUp[]
+  attachments         Attachment[]
+
+  @@index([status])
+  @@index([assignedUserId])
+  @@index([email])
+  @@rls
 }
 
 model Opportunity {
@@ -99,24 +118,137 @@ model Opportunity {
   primaryContactId    String?
   title               String
   estimatedValue      Float?
-  probability         Int?     @default(0) // 0 to 100
+  probability         Int?     
   expectedCloseDate   DateTime?
-  stage               String   @default("New")
+  stage               String   
   service             String?
   source              String?
-  priority            String?  @default("Normal")
+  priority            String?  
   nextFollowUp        DateTime?
+  lossReason          String?
   notes               String?
   
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  updatedAt           temporal.updatedAtString()
 
   company             Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   primaryContact      Contact? @relation("PrimaryContact", fields: [primaryContactId], references: [id], onDelete: SetNull)
+  activities          Activity[]
+  followUps           FollowUp[]
+  attachments         Attachment[]
+  proposals           Proposal[]
+
+  @@index([stage])
+  @@index([companyId])
+  @@index([primaryContactId])
+  @@rls
 }
 
 // ------------------------------------------------------
-// Phase 3 Schema: Sales & Delivery
+// Timeline & Follow-ups
+// ------------------------------------------------------
+
+model Activity {
+  id              String   @id @default(uuid())
+  type            String   // NOTE, CALL, EMAIL, MEETING, FOLLOW_UP, STAGE_CHANGE
+  title           String
+  description     String?
+  date            DateTime @default(now())
+  status          String   
+  
+  authorId        String?
+  leadId          String?
+  contactId       String?
+  companyId       String?
+  opportunityId   String?
+  projectId       String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       temporal.updatedAtString()
+  
+  author          User?        @relation("ActivityAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  lead            Lead?        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  contact         Contact?     @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  company         Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  opportunity     Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  project         Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([leadId])
+  @@index([contactId])
+  @@index([companyId])
+  @@index([opportunityId])
+  @@index([projectId])
+  @@index([date])
+  @@index([type])
+  @@rls
+}
+
+model FollowUp {
+  id              String   @id @default(uuid())
+  title           String
+  dueDate         DateTime
+  priority        String   
+  status          String   
+  notes           String?
+  
+  leadId          String?
+  contactId       String?
+  companyId       String?
+  opportunityId   String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       temporal.updatedAtString()
+  
+  lead            Lead?        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  contact         Contact?     @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  company         Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  opportunity     Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([dueDate])
+  @@index([status])
+  @@index([leadId])
+  @@index([contactId])
+  @@index([companyId])
+  @@index([opportunityId])
+  @@rls
+}
+
+// ------------------------------------------------------
+// Tags & Attachments
+// ------------------------------------------------------
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  color     String   
+  createdAt DateTime @default(now())
+  @@rls
+}
+
+model Attachment {
+  id            String   @id @default(uuid())
+  fileName      String
+  fileUrl       String
+  provider      String   
+  size          Int?
+  mimeType      String?
+  
+  leadId        String?
+  contactId     String?
+  companyId     String?
+  opportunityId String?
+  
+  createdAt     DateTime @default(now())
+
+  lead          Lead?        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  contact       Contact?     @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  company       Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  @@rls
+}
+
+// ------------------------------------------------------
+// Sales & Delivery
 // ------------------------------------------------------
 
 model Proposal {
@@ -124,21 +256,27 @@ model Proposal {
   proposalNumber  String   @unique
   clientId        String?
   companyId       String?
+  opportunityId   String?
   title           String
   description     String?
   validUntil      DateTime?
-  status          String   @default("Draft")
-  subtotal        Float    @default(0)
-  discount        Float    @default(0)
-  tax             Float    @default(0)
-  total           Float    @default(0)
+  status          String   
+  subtotal        Float    
+  discount        Float    
+  tax             Float    
+  total           Float    
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
-  client          Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
-  company         Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  client          Client?      @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  company         Company?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  opportunity     Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
   items           ProposalItem[]
+
+  @@index([status])
+  @@index([companyId])
+  @@rls
 }
 
 model ProposalItem {
@@ -146,34 +284,38 @@ model ProposalItem {
   proposalId      String
   service         String
   description     String?
-  quantity        Int      @default(1)
-  unitPrice       Float    @default(0)
-  discount        Float    @default(0)
-  total           Float    @default(0)
+  quantity        Int      
+  unitPrice       Float    
+  discount        Float    
+  total           Float    
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   proposal        Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  @@rls
 }
 
 model Client {
   id              String   @id @default(uuid())
   companyId       String?  @unique
-  status          String   @default("Active")
+  status          String   
   notes           String?
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   company         Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   proposals       Proposal[]
   projects        Project[]
   invoices        Invoice[]
+
+  @@index([status])
+  @@rls
 }
 
 // ------------------------------------------------------
-// Phase 4 Schema: Delivery
+// Delivery
 // ------------------------------------------------------
 
 model Project {
@@ -183,16 +325,21 @@ model Project {
   description         String?
   startDate           DateTime?
   expectedCompletion  DateTime?
-  status              String   @default("Planning")
+  status              String   
   budget              Float?
-  priority            String?  @default("Normal")
+  priority            String?  
   
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  updatedAt           temporal.updatedAtString()
 
   client              Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
   tasks               Task[]
   invoices            Invoice[]
+  activities          Activity[]
+
+  @@index([status])
+  @@index([clientId])
+  @@rls
 }
 
 model Task {
@@ -200,18 +347,22 @@ model Task {
   projectId       String
   title           String
   description     String?
-  status          String   @default("Todo")
-  priority        String?  @default("Normal")
+  status          String   
+  priority        String?  
   dueDate         DateTime?
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@rls
 }
 
 // ------------------------------------------------------
-// Phase 5 Schema: Finance
+// Finance
 // ------------------------------------------------------
 
 model Invoice {
@@ -221,33 +372,39 @@ model Invoice {
   projectId       String?
   issueDate       DateTime?
   dueDate         DateTime?
-  status          String   @default("Draft")
-  subtotal        Float    @default(0)
-  tax             Float    @default(0)
-  discount        Float    @default(0)
-  total           Float    @default(0)
+  status          String   
+  subtotal        Float    
+  tax             Float    
+  discount        Float    
+  total           Float    
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   client          Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
   project         Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
   items           InvoiceItem[]
   payments        Payment[]
+
+  @@index([status])
+  @@index([clientId])
+  @@index([dueDate])
+  @@rls
 }
 
 model InvoiceItem {
   id              String   @id @default(uuid())
   invoiceId       String
   description     String
-  quantity        Int      @default(1)
-  unitPrice       Float    @default(0)
-  total           Float    @default(0)
+  quantity        Int      
+  unitPrice       Float    
+  total           Float    
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  @@rls
 }
 
 model Payment {
@@ -260,7 +417,178 @@ model Payment {
   notes           String?
   
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       temporal.updatedAtString()
 
   invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  @@rls
 }
+
+// --- RLS Policies ---
+
+policy_all allow_authenticated_User {
+  target = User
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Company {
+  target = Company
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Contact {
+  target = Contact
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Lead {
+  target = Lead
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Opportunity {
+  target = Opportunity
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Activity {
+  target = Activity
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_FollowUp {
+  target = FollowUp
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Tag {
+  target = Tag
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Attachment {
+  target = Attachment
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Proposal {
+  target = Proposal
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_ProposalItem {
+  target = ProposalItem
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Client {
+  target = Client
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Project {
+  target = Project
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Task {
+  target = Task
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Invoice {
+  target = Invoice
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_InvoiceItem {
+  target = InvoiceItem
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+policy_all allow_authenticated_Payment {
+  target = Payment
+  roles = [authenticated]
+  using = "auth.uid() IS NOT NULL"
+  withCheck = "auth.uid() IS NOT NULL"
+}
+
+}
+// ------------------------------------------------------
+// Marketing & Landing Page Content
+// ------------------------------------------------------
+
+model Service {
+  id          String   @id @default(uuid())
+  number      String
+  title       String
+  description String?
+  details     String[] 
+  icon        String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  @@rls
+}
+
+policy_all allow_anon_Service {
+  target = Service
+  roles = [anon, authenticated]
+  using = "true"
+  withCheck = "true"
+}
+
+
+model PortfolioProject {
+  id          String   @id @default(uuid())
+  title       String
+  subtitle    String
+  label       String
+  gradient    String
+  items       Json     
+
+  createdAt   DateTime @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  @@rls
+}
+
+policy_all allow_anon_PortfolioProject {
+  target = PortfolioProject
+  roles = [anon, authenticated]
+  using = "true"
+  withCheck = "true"
+}
+

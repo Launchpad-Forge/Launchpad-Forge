@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 
 // Dynamic imports for performance
 const LoadingScreen = dynamic(() => import("@/components/ui/LoadingScreen"), { ssr: false });
-const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), { ssr: false });
 const Hero = dynamic(() => import("@/components/sections/Hero"), { ssr: false });
 const MarqueeBands = dynamic(() => import("@/components/sections/MarqueeBands"));
 const WhatWeBuild = dynamic(() => import("@/components/sections/WhatWeBuild"), { ssr: false });
@@ -25,7 +24,6 @@ export default function Home() {
   return (
     <SmoothScroll>
       <LoadingScreen />
-      <CustomCursor />
       <Navigation />
 
       <main className="relative">

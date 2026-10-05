@@ -1,13 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Search, FileText, Users, Building, Briefcase, Command, FolderKanban, CheckSquare } from "lucide-react";
+import { useState, useEffect, useTransition } from "react";
+import { Search, FileText, Users, Building, Briefcase, Command, FolderKanban, CheckSquare, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { performGlobalSearchAction } from "@/app/crm/searchActions";
+
+type SearchResult = {
+  name: string;
+  icon: React.ReactNode;
+  href: string;
+  type: string;
+};
 
 export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   // Handle keyboard shortcut (Cmd/Ctrl + K)
@@ -42,10 +52,32 @@ export default function GlobalSearch() {
     { name: "Tasks", icon: <CheckSquare className="w-4 h-4" />, href: "/crm/tasks", type: "Module" },
   ];
 
-  const allResults = [...quickLinks, ...modules];
-  const filteredResults = query 
-    ? allResults.filter(r => r.name.toLowerCase().includes(query.toLowerCase()) || r.type.toLowerCase().includes(query.toLowerCase()))
-    : quickLinks;
+  useEffect(() => {
+    if (query.length < 2) {
+      setResults([...quickLinks, ...modules]);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      startTransition(async () => {
+        const data = await performGlobalSearchAction(query);
+        const newResults: SearchResult[] = [];
+        
+        data.leads.forEach(l => newResults.push({ name: l.name, icon: <Users className="w-4 h-4" />, href: `/crm/leads`, type: "Lead" }));
+        data.contacts.forEach(c => newResults.push({ name: c.name, icon: <Users className="w-4 h-4" />, href: `/crm/contacts`, type: "Contact" }));
+        data.companies.forEach(c => newResults.push({ name: c.name, icon: <Building className="w-4 h-4" />, href: `/crm/companies`, type: "Company" }));
+        data.opportunities.forEach(o => newResults.push({ name: o.title, icon: <Briefcase className="w-4 h-4" />, href: `/crm/opportunities`, type: "Opportunity" }));
+
+        if (newResults.length === 0) {
+          setResults([...quickLinks, ...modules].filter(r => r.name.toLowerCase().includes(query.toLowerCase())));
+        } else {
+          setResults(newResults);
+        }
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   if (!isOpen) {
     return (
@@ -82,13 +114,17 @@ export default function GlobalSearch() {
         </div>
         
         <div className="max-h-96 overflow-y-auto p-2">
-          {filteredResults.length === 0 ? (
+          {isPending ? (
+            <div className="py-12 flex justify-center text-accent">
+              <Loader2 className="w-6 h-6 animate-spin" />
+            </div>
+          ) : results.length === 0 ? (
             <div className="py-12 text-center text-text-muted text-sm">
               No results found for "{query}"
             </div>
           ) : (
             <div className="space-y-1">
-              {filteredResults.map((result, idx) => (
+              {results.map((result, idx) => (
                 <button
                   key={idx}
                   onClick={() => {

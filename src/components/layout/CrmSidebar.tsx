@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSidebar } from "./SidebarContext";
 import {
   LayoutDashboard,
   Users,
@@ -35,6 +37,7 @@ const navigation = [
     items: [
       { name: "Proposals", href: "/crm/proposals", icon: FileText },
       { name: "Services", href: "/crm/services", icon: Layers },
+      { name: "Portfolio", href: "/crm/portfolio", icon: Briefcase },
     ],
   },
   {
@@ -64,17 +67,43 @@ const navigation = [
 
 export default function CrmSidebar() {
   const pathname = usePathname();
+  const { isCollapsed, isMobileOpen, closeMobile } = useSidebar();
 
   return (
-    <aside className="w-64 border-r border-border-subtle bg-surface flex-shrink-0 hidden md:flex flex-col h-full overflow-y-auto">
-      <div className="h-16 flex items-center px-6 border-b border-border-subtle shrink-0">
-        <Link href="/crm" className="font-bold text-lg flex items-center gap-2">
-          <div className="w-8 h-8 rounded bg-accent flex items-center justify-center text-white">
-            LF
-          </div>
-          <span className="tracking-tight">Forge CRM</span>
-        </Link>
-      </div>
+    <>
+      {/* Mobile overlay */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeMobile}
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.aside
+        initial={false}
+        animate={{ 
+          width: isCollapsed ? 80 : 256,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className={cn(
+          "fixed md:relative z-50 h-full border-r border-border-subtle bg-surface flex flex-col overflow-hidden whitespace-nowrap",
+          "transition-transform duration-300 md:translate-x-0",
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="h-16 flex items-center px-6 border-b border-border-subtle shrink-0">
+          <Link href="/crm" className="font-bold text-lg flex items-center gap-2">
+            <div className="w-8 h-8 rounded bg-accent flex items-center justify-center text-white shrink-0">
+              LF
+            </div>
+            {!isCollapsed && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="tracking-tight">Forge CRM</motion.span>}
+          </Link>
+        </div>
 
       <nav className="flex-1 py-6 px-4 space-y-8">
         {/* Top level items */}
@@ -89,14 +118,23 @@ export default function CrmSidebar() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                  "relative flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   isActive 
-                    ? "bg-accent-dim text-accent" 
+                    ? "text-accent" 
                     : "text-text-secondary hover:text-text-primary hover:bg-surface-elevated"
                 )}
               >
-                {Icon && <Icon className="w-4 h-4" />}
-                {item.name}
+                {isActive && (
+                  <motion.div
+                    layoutId="sidebar-active"
+                    className="absolute inset-0 bg-accent-dim rounded-md"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <div className="relative z-10 flex items-center gap-3 w-full" title={isCollapsed ? item.name : undefined}>
+                  {Icon && <Icon className="w-5 h-5 shrink-0" />}
+                  {!isCollapsed && <span>{item.name}</span>}
+                </div>
               </Link>
             );
           })}
@@ -108,9 +146,11 @@ export default function CrmSidebar() {
           
           return (
             <div key={group.name} className="space-y-1">
-              <h3 className="px-3 text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-                {group.name}
-              </h3>
+              {!isCollapsed && (
+                <h3 className="px-3 text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
+                  {group.name}
+                </h3>
+              )}
               {group.items?.map((item) => {
                 const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
                 const Icon = item.icon;
@@ -120,14 +160,23 @@ export default function CrmSidebar() {
                     key={item.name}
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                      "relative flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                       isActive 
-                        ? "bg-accent-dim text-accent" 
+                        ? "text-accent" 
                         : "text-text-secondary hover:text-text-primary hover:bg-surface-elevated"
                     )}
                   >
-                    <Icon className="w-4 h-4" />
-                    {item.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="sidebar-active"
+                        className="absolute inset-0 bg-accent-dim rounded-md"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    <div className="relative z-10 flex items-center gap-3 w-full" title={isCollapsed ? item.name : undefined}>
+                      <Icon className="w-5 h-5 shrink-0" />
+                      {!isCollapsed && <span>{item.name}</span>}
+                    </div>
                   </Link>
                 );
               })}
@@ -135,6 +184,7 @@ export default function CrmSidebar() {
           );
         })}
       </nav>
-    </aside>
+      </motion.aside>
+    </>
   );
 }

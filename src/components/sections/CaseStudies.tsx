@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   QrCode, ChefHat, BarChart3, Receipt, Package, FileText,
@@ -15,47 +15,7 @@ interface CaseStudyProps {
   gradient: string;
 }
 
-const PROJECTS: CaseStudyProps[] = [
-  {
-    title: "Restaurant Operating System",
-    subtitle: "End-to-end management system with QR ordering, kitchen display, inventory tracking, and analytics.",
-    label: "CONCEPT PROJECT",
-    gradient: "linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-elevated), var(--accent) 5%) 100%)",
-    items: [
-      { icon: <QrCode size={16} />, label: "QR Ordering" },
-      { icon: <ChefHat size={16} />, label: "Kitchen" },
-      { icon: <BarChart3 size={16} />, label: "Analytics" },
-      { icon: <Receipt size={16} />, label: "Billing" },
-      { icon: <Package size={16} />, label: "Inventory" },
-    ],
-  },
-  {
-    title: "AI Document Intelligence",
-    subtitle: "Automated document processing pipeline with OCR, extraction, embedding, and AI-powered answers.",
-    label: "CONCEPT PROJECT",
-    gradient: "linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-elevated), var(--accent) 3%) 100%)",
-    items: [
-      { icon: <FileText size={16} />, label: "Document" },
-      { icon: <ScanText size={16} />, label: "OCR" },
-      { icon: <Database size={16} />, label: "Embedding" },
-      { icon: <Brain size={16} />, label: "RAG" },
-      { icon: <MessageSquare size={16} />, label: "AI Answer" },
-    ],
-  },
-  {
-    title: "LifeOS",
-    subtitle: "Personal productivity system with tasks, projects, learning tracking, AI assistance, and analytics.",
-    label: "INTERNAL PROJECT",
-    gradient: "linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-elevated), var(--accent) 4%) 100%)",
-    items: [
-      { icon: <CheckSquare size={16} />, label: "Tasks" },
-      { icon: <FolderKanban size={16} />, label: "Projects" },
-      { icon: <GraduationCap size={16} />, label: "Learning" },
-      { icon: <Sparkles size={16} />, label: "AI" },
-      { icon: <LineChart size={16} />, label: "Analytics" },
-    ],
-  },
-];
+// Projects are loaded dynamically via Server Actions
 
 function CaseStudyCard({ title, subtitle, label, items, gradient }: CaseStudyProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -80,20 +40,26 @@ function CaseStudyCard({ title, subtitle, label, items, gradient }: CaseStudyPro
 
           {/* Floating UI Elements */}
           <div className="absolute inset-8 flex flex-wrap gap-2 md:gap-3 items-center justify-center content-center">
-            {items.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.08, duration: 0.5 }}
-                className="glass-elevated rounded-xl px-3 py-2 md:px-4 md:py-3 flex items-center gap-2 hover:border-[var(--accent)]/30 hover:scale-105 transition-all duration-300"
-              >
-                <div className="text-[var(--accent)]">{item.icon}</div>
-                <span className="text-xs md:text-sm font-medium tracking-wide">
-                  {item.label}
-                </span>
-              </motion.div>
-            ))}
+            {items.map((item: any, i: number) => {
+              const IconComp = typeof item.icon === 'string' ? (require('lucide-react')[item.icon] || require('lucide-react').Star) : null;
+              
+              return (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                  transition={{ delay: 0.3 + i * 0.08, duration: 0.5 }}
+                  className="glass-elevated rounded-xl px-3 py-2 md:px-4 md:py-3 flex items-center gap-2 hover:border-[var(--accent)]/30 hover:scale-105 transition-all duration-300"
+                >
+                  <div className="text-[var(--accent)]">
+                    {IconComp ? <IconComp size={16} /> : item.icon}
+                  </div>
+                  <span className="text-xs md:text-sm font-medium tracking-wide">
+                    {item.label}
+                  </span>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
@@ -121,6 +87,18 @@ function CaseStudyCard({ title, subtitle, label, items, gradient }: CaseStudyPro
 }
 
 export default function CaseStudies() {
+  const [projects, setProjects] = useState<any[]>([]);
+
+  useEffect(() => {
+    import("@/app/crm/portfolio/actions").then(({ getPortfolioProjectsAction }) => {
+      getPortfolioProjectsAction().then((data) => {
+        if (data && data.length > 0) {
+          setProjects(data);
+        }
+      });
+    });
+  }, []);
+
   return (
     <section 
       id="work" 
@@ -139,9 +117,11 @@ export default function CaseStudies() {
       </div>
 
       <div className="container-forge grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {PROJECTS.map((project, index) => (
-          <CaseStudyCard key={index} {...project} />
-        ))}
+        {projects.map((project, index) => {
+          // ensure items are always correctly parsed
+          const itemsArray = Array.isArray(project.items) ? project.items : [];
+          return <CaseStudyCard key={index} {...project} items={itemsArray} />;
+        })}
       </div>
     </section>
   );

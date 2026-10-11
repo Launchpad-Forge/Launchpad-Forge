@@ -2,6 +2,7 @@ import 'temporal-polyfill/global';
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+// Global client initializations
 import ClientInit from "@/components/layout/ClientInit";
 
 const outfit = Outfit({

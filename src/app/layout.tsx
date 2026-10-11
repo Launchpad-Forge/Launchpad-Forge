@@ -2,6 +2,7 @@ import 'temporal-polyfill/global';
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import ClientInit from "@/components/layout/ClientInit";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -61,7 +62,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${outfit.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col noise">{children}</body>
+      <body className="min-h-full flex flex-col noise">
+        <ClientInit />
+        {children}
+      </body>
     </html>
   );
 }

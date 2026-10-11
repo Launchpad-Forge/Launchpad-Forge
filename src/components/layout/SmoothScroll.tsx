@@ -11,11 +11,19 @@ gsap.registerPlugin(ScrollTrigger);
 if (typeof console !== "undefined") {
   const originalWarn = console.warn;
   console.warn = (...args) => {
+    const first = args[0];
+    const msg =
+      typeof first === "string"
+        ? first
+        : first instanceof Error
+          ? first.message
+          : String(first ?? "");
+
     if (
-      args[0] &&
-      typeof args[0] === "string" &&
-      (args[0].includes("THREE.Clock: This module has been deprecated") ||
-        args[0].includes("Invalid scope"))
+      msg.includes("Clock: This module has been deprecated") ||
+      msg.includes("THREE.Clock") ||
+      msg.includes("THREE.Timer") ||
+      msg.includes("Invalid scope")
     ) {
       return;
     }

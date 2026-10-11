@@ -2,7 +2,7 @@
 
 import { Plus, Edit2, X, Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
-import { createServiceAction, updateServiceAction, deleteServiceAction } from "./actions";
+import { createServiceAction, updateServiceAction, deleteServiceAction, seedCatalogServicesAction } from "./actions";
 
 export default function ServicesClient({ initialServices }: { initialServices: any[] }) {
   const [isPending, startTransition] = useTransition();
@@ -16,6 +16,12 @@ export default function ServicesClient({ initialServices }: { initialServices: a
     setNewService(defaultService);
     setEditingId(null);
     setIsModalOpen(true);
+  };
+
+  const handleSeed = () => {
+    startTransition(async () => {
+      await seedCatalogServicesAction();
+    });
   };
 
   const handleOpenEdit = (service: any) => {
@@ -99,10 +105,19 @@ export default function ServicesClient({ initialServices }: { initialServices: a
           <h1 className="heading-sm">Services</h1>
           <p className="text-text-secondary text-sm mt-1">Manage your agency service offerings.</p>
         </div>
-        <button onClick={handleOpenAdd} className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors shadow-lg shadow-accent/20">
-          <Plus className="w-4 h-4" />
-          Add Service
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSeed}
+            disabled={isPending}
+            className="flex items-center gap-2 bg-surface-elevated hover:bg-surface border border-border-subtle hover:border-accent text-text-secondary hover:text-text-primary px-3 py-2 rounded-md font-medium text-xs transition-colors"
+          >
+            Sync Standard Catalog
+          </button>
+          <button onClick={handleOpenAdd} className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors shadow-lg shadow-accent/20">
+            <Plus className="w-4 h-4" />
+            Add Service
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">

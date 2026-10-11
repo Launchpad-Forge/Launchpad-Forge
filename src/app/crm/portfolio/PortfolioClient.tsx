@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Plus, Edit2, Trash2, Layout, Smartphone, Brain, Workflow, Database, Shield } from "lucide-react";
 import * as icons from "lucide-react";
-import { createPortfolioProjectAction, updatePortfolioProjectAction, deletePortfolioProjectAction } from "./actions";
+import { createPortfolioProjectAction, updatePortfolioProjectAction, deletePortfolioProjectAction, seedCatalogPortfolioAction } from "./actions";
 
 type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 
@@ -33,6 +33,13 @@ export default function PortfolioClient({ initialProjects }: { initialProjects: 
     items: "" // comma separated for now
   });
   const [isPending, startTransition] = useTransition();
+
+  const handleSeed = () => {
+    startTransition(async () => {
+      await seedCatalogPortfolioAction();
+      window.location.reload();
+    });
+  };
 
   const handleSaveProject = async () => {
     startTransition(async () => {
@@ -90,18 +97,27 @@ export default function PortfolioClient({ initialProjects }: { initialProjects: 
           <h2 className="text-2xl font-bold tracking-tight text-foreground">Portfolio Projects</h2>
           <p className="text-[var(--text-secondary)]">Manage landing page case studies</p>
         </div>
-        <button
-          onClick={() => {
-            setEditingId(null);
-            setNewProject({ title: "", subtitle: "", label: "CONCEPT PROJECT", gradient: "linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-elevated), var(--accent) 5%) 100%)", items: "" });
-            setIsAdding(true);
-          }}
-          disabled={isPending}
-          className="bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50"
-        >
-          <Plus size={18} />
-          <span>Add Project</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSeed}
+            disabled={isPending}
+            className="bg-surface-elevated hover:bg-surface border border-border-subtle hover:border-accent text-text-secondary hover:text-text-primary px-3 py-2 rounded-lg text-xs font-medium transition-colors"
+          >
+            Sync Standard Projects
+          </button>
+          <button
+            onClick={() => {
+              setEditingId(null);
+              setNewProject({ title: "", subtitle: "", label: "CONCEPT PROJECT", gradient: "linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--surface-elevated), var(--accent) 5%) 100%)", items: "" });
+              setIsAdding(true);
+            }}
+            disabled={isPending}
+            className="bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50"
+          >
+            <Plus size={18} />
+            <span>Add Project</span>
+          </button>
+        </div>
       </div>
 
       {(isAdding || editingId) && (

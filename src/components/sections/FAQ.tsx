@@ -1,26 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MessageCircle } from "lucide-react";
-
-const faqs = [
-  {
-    question: "What exactly do you build?",
-    answer: "We engineer end-to-end digital systems. This ranges from high-performance websites and mobile apps to custom AI integrations, n8n automations, and scalable cloud infrastructure. Everything is custom-tailored to your business."
-  },
-  {
-    question: "Do you use templates or build custom solutions?",
-    answer: "Everything we build is custom-engineered from the ground up for your specific business needs. We focus on scalable architecture, premium design, and optimal performance rather than limiting off-the-shelf templates."
-  },
-  {
-    question: "How long does a typical project take?",
-    answer: "Timelines vary based on scope and complexity. A premium marketing website might take 2-4 weeks, while a full custom SaaS platform, mobile app, or complex AI automation system can take 2-4 months to build and deploy."
-  },
-  {
-    question: "Do you offer ongoing support and maintenance?",
-    answer: "Yes, we offer dedicated monthly retainers for continuous development, security updates, cloud management, and SEO/growth optimization. We act as your long-term technology partner to ensure your systems scale with you."
-  }
-];
+import { ChevronDown, MessageCircle, ArrowRight } from "lucide-react";
+import { FAQ_ITEMS } from "@/lib/constants";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -39,8 +22,8 @@ export default function FAQ() {
           <p className="text-[var(--text-secondary)] text-lg">Everything you need to know about working with us.</p>
         </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => {
+        <div className="space-y-4 mb-12">
+          {FAQ_ITEMS.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div 
@@ -51,7 +34,7 @@ export default function FAQ() {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <span className="text-lg font-medium text-foreground pr-8">{faq.question}</span>
+                  <span className="text-base sm:text-lg font-medium text-foreground pr-8">{faq.question}</span>
                   <ChevronDown 
                     className={`text-[var(--accent)] flex-shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} 
                   />
@@ -64,7 +47,7 @@ export default function FAQ() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <div className="p-6 pt-0 text-[var(--text-secondary)] leading-relaxed">
+                      <div className="p-6 pt-0 text-[var(--text-secondary)] leading-relaxed text-sm sm:text-base">
                         <div className="w-full h-px bg-foreground/5 mb-6" />
                         {faq.answer}
                       </div>
@@ -74,6 +57,19 @@ export default function FAQ() {
               </div>
             );
           })}
+        </div>
+
+        <div className="glass-elevated rounded-2xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-6 border border-border-subtle">
+          <div className="text-left">
+            <h4 className="text-base sm:text-lg font-bold text-foreground mb-1">Have a custom question or specific requirements?</h4>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">We answer technical inquiries within 24 business hours.</p>
+          </div>
+          <Link
+            href="/contact"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-foreground hover:bg-[var(--accent)]/90 transition-all shadow-md shadow-[var(--accent)]/20"
+          >
+            Ask Us Directly <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </section>

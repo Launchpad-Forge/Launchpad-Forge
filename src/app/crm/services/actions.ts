@@ -2,10 +2,47 @@
 
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { SERVICES_CATALOG } from "@/lib/constants";
 
 export async function getServicesAction() {
-  const data = await prisma.orm.public.Service.orderBy(s => s.createdAt.asc()).all();
-  return JSON.parse(JSON.stringify(data));
+  try {
+    const data = await prisma.orm.public.Service.orderBy(s => s.createdAt.asc()).all();
+    if (data && data.length > 0) {
+      return JSON.parse(JSON.stringify(data));
+    }
+  } catch (err) {
+    console.warn("Service query failed, falling back to static catalog:", err);
+  }
+
+  // Fallback to centralized catalog if DB is empty or during first boot
+  return SERVICES_CATALOG.map((s) => ({
+    id: s.id,
+    number: s.number,
+    title: s.title,
+    description: s.description,
+    details: s.whatsIncluded,
+    icon: s.icon,
+  }));
+}
+
+export async function seedCatalogServicesAction() {
+  try {
+    for (const s of SERVICES_CATALOG) {
+      await prisma.orm.public.Service.create({
+        number: s.number,
+        title: s.title,
+        description: s.description,
+        details: s.whatsIncluded,
+        icon: s.icon,
+      });
+    }
+    revalidatePath("/");
+    revalidatePath("/services");
+    revalidatePath("/crm/services");
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
 }
 
 export async function createServiceAction(data: {
@@ -25,6 +62,7 @@ export async function createServiceAction(data: {
   });
   
   revalidatePath("/");
+  revalidatePath("/services");
   revalidatePath("/crm/services");
 }
 
@@ -40,6 +78,7 @@ export async function updateServiceAction(id: string, data: {
   });
   
   revalidatePath("/");
+  revalidatePath("/services");
   revalidatePath("/crm/services");
 }
 
@@ -47,5 +86,6 @@ export async function deleteServiceAction(id: string) {
   await prisma.orm.public.Service.where({ id }).delete();
   
   revalidatePath("/");
+  revalidatePath("/services");
   revalidatePath("/crm/services");
 }

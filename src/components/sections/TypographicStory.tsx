@@ -56,7 +56,7 @@ export default function TypographicStory() {
         { opacity: 1, y: 0, scale: 1 },
         "<"
       );
-    }, containerRef);
+    }, containerRef.current);
 
     return () => ctx.revert();
   }, []);

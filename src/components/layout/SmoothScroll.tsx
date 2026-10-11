@@ -7,11 +7,16 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Suppress THREE.Clock deprecation warning from @react-three/fiber
+// Suppress harmless vendor warnings (e.g. THREE.Clock deprecation, transient GSAP scope during unmount)
 if (typeof console !== "undefined") {
   const originalWarn = console.warn;
   console.warn = (...args) => {
-    if (args[0] && typeof args[0] === "string" && args[0].includes("THREE.Clock: This module has been deprecated")) {
+    if (
+      args[0] &&
+      typeof args[0] === "string" &&
+      (args[0].includes("THREE.Clock: This module has been deprecated") ||
+        args[0].includes("Invalid scope"))
+    ) {
       return;
     }
     originalWarn(...args);

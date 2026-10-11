@@ -24,7 +24,7 @@ export default function IdeaToImpact() {
           setProgress(self.progress);
         },
       });
-    }, containerRef);
+    }, containerRef.current);
 
     return () => ctx.revert();
   }, []);

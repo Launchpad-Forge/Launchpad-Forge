@@ -38,7 +38,7 @@ export default function WhyLaunchpadForge() {
           }
         );
       });
-    }, containerRef);
+    }, containerRef.current);
 
     return () => ctx.revert();
   }, []);

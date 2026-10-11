@@ -32,7 +32,7 @@ export default function Hero() {
           setCurrentStage(Math.floor(self.progress * SCROLL_STAGES.length));
         },
       });
-    }, containerRef);
+    }, containerRef.current);
 
     return () => ctx.revert();
   }, []);
@@ -77,13 +77,13 @@ export default function Hero() {
           style={{ opacity: Math.max(0, 1 - scrollProgress * 5) }}
         >
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.8 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
             <div className="label mb-6">
               <span className="inline-block w-8 h-px bg-[var(--accent)] mr-3 align-middle" />
-              TECHNOLOGY COMPANY
+              DIGITAL ENGINEERING & AUTOMATION
             </div>
 
             <h1 className="heading-xl mb-6 max-w-4xl">
@@ -93,28 +93,24 @@ export default function Hero() {
             </h1>
 
             <p className="heading-sm text-[var(--text-secondary)] mb-4 max-w-2xl font-normal">
-              We build the digital infrastructure
-              behind ambitious businesses.
+              We build the digital infrastructure behind ambitious businesses.
             </p>
 
             <p className="body-lg max-w-xl mb-10">
-              From software and AI to automation,
-              data and cloud infrastructure,
-              we turn complex business problems
-              into scalable digital systems.
+              From high-performance software and AI systems to event-driven automation and cloud architectures, we turn complex business problems into scalable digital engines.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <MagneticButton
                 variant="primary"
-                href="#contact"
+                href="/contact"
                 cursorText="START"
               >
                 START A PROJECT →
               </MagneticButton>
               <MagneticButton
                 variant="secondary"
-                href="#work"
+                href="/work"
                 cursorText="EXPLORE →"
               >
                 EXPLORE OUR WORK

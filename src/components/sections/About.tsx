@@ -32,7 +32,7 @@ export default function About() {
           }
         );
       });
-    }, containerRef);
+    }, containerRef.current);
 
     return () => ctx.revert();
   }, []);
